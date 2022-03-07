@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import AllUser from './Component/AllUser';
+import AddUser from './Component/AddUser';
+import EditUser from './Component/EditUser';
+import NavBar from './Component/NavBar';
+import NotFound from './Component/NotFound'; 
+import CodeForinterview from './Component/CodeForinterview';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import api from './Service/api'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route exact path="/" component={CodeForinterview} />
+        <Route exact path="/all" component={AllUser} />
+        <Route exact path="/add" component={AddUser} />
+        <Route exact path="/edit/:id" component={EditUser} />
+        <Route component={NotFound} />
+        <api />
+      </Switch>
+    </Router>
   );
 }
 
