@@ -3,6 +3,7 @@ import { Table, TableHead, TableCell, TableRow, TableBody, Button, makeStyles } 
 import { getUsers, deleteUser } from '../Service/api';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
+import { dialogContentTextClasses } from '@mui/material';
 
 const useStyles = makeStyles({
     table: {
@@ -31,31 +32,29 @@ const AllUsers = () => {
     useEffect(() => {
         getAllUsers();
         deleteUser()
+        
     }, []);
 
     useEffect(() => {
-        axios.get(`http://localhost:7001`)
+        axios.get(`http://localhost:7002`)
             .then(res => {
                 setUsers(res.data.data)
             })
     }, [])
 
-        useEffect((_id)=>{
-            
-            axios.delete(`http://localhost:7001/${_id}`, {
-            
-            }).then((result) => {
+        
+
+        function deleteuser(_id) {
+            console.log(_id);
+            axios.delete(`http://localhost:7001/${_id}`, {}).then((result) => {
                 console.log("result.data", result);
-               
-                // setUsers()
+    
             })
-        })
+    
+        }
 
         
         
-    
-    
-
     const deleteUserData = async (id) => {
         await deleteUser(id);   
         getAllUsers();

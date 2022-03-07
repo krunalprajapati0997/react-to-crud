@@ -29,6 +29,7 @@ const EditUser = () => {
 
     useEffect(() => {
         loadUserDetails();
+        
     }, );
 
     const loadUserDetails = async() => {

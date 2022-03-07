@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { FormGroup, FormControl, InputLabel, Input, Button, makeStyles, Typography } from '@material-ui/core';
 import { addUser } from '../Service/api';
 import { useHistory } from 'react-router-dom';
@@ -43,6 +43,8 @@ const AddUser = () => {
         await addUser(user);
         history.push('./all');
     }
+    
+    
 
     
     
