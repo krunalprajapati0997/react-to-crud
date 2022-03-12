@@ -5,7 +5,9 @@ import NavBar from './Component/NavBar';
 import NotFound from './Component/NotFound'; 
 import CodeForinterview from './Component/CodeForinterview';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import api from './Service/api'
+// import api from './Service/api'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 function App() {
   return (
@@ -17,7 +19,7 @@ function App() {
         <Route exact path="/add" component={AddUser} />
         <Route exact path="/edit/:id" component={EditUser} />
         <Route component={NotFound} />
-        <api />
+        {/* <api /> */}
       </Switch>
     </Router>
   );

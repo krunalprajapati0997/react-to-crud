@@ -1,15 +1,15 @@
 import axios from 'axios';
 
 // const usersUrl = 'http://localhost:3003/users';
-const usersUrl = 'http://localhost:7002';
+const usersUrl = 'http://localhost:6009';
 
 export const getUsers = async (id) => {
     id = id || '';
-    return await axios.get(`http://localhost:7002/${id}`);
+    return await axios.get(`http://localhost:6009/${id}`);
 }
 
 export const addUser = async (user) => {
-    return await axios.post(`${usersUrl}`,user);
+    return await axios.post('http://localhost:6009',user);
 }
 
 export const deleteUser = async (id,user) => {

@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 import { FormGroup, FormControl, InputLabel, Input, Button, makeStyles, Typography } from '@material-ui/core';
-import { addUser } from '../Service/api';
-import { useHistory } from 'react-router-dom';
+// import { useHistory,useParams } from 'react-router';
+import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 
-const initialValue = {
-    name: '',
-    username: '',
-    email: '',
-    phone: ''
-}
 
-    
 
 
 
@@ -29,47 +23,52 @@ const useStyles = makeStyles({
 
 
 const AddUser = () => {
-    const [user, setUser] = useState(initialValue);
-    const { name, username, email, phone } = user;
+    // let history = useHistory();
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [profile,setProfile] = useState([]);
     const classes = useStyles();
-    let history = useHistory();
-    
-    const onValueChange = (e) => {
-        console.log(e.target.value);
-        setUser({...user, [e.target.name]: e.target.value})
-    }
-    
-    const addUserDetails = async() => {
-        await addUser(user);
-        history.push('./all');
-    }
-    
-    
 
-    
-    
-    
+    const postData = () => {
+        let FD = new FormData();
+        FD.append('name', name);
+        FD.append('username', username);
+        FD.append('email', email);
+        FD.append('phone',parseInt(phone));
+        FD.append('profile_file', profile[0]);
+        console.log("profile", profile);
+        axios.post('http://localhost:6009', FD)
+    }
+
+   
     return (
         <FormGroup className={classes.container}>
             <Typography variant="h4">Add User</Typography>
             <FormControl>
                 <InputLabel htmlFor="my-input">Name</InputLabel>
-                <Input onChange={(e) => onValueChange(e)} name='name' value={name} id="my-input" />
+                <Input placeholder='name' onChange={(e) => setName(e.target.value)} id="my-input" />
             </FormControl>
             <FormControl>
                 <InputLabel htmlFor="my-input">Username</InputLabel>
-                <Input onChange={(e) => onValueChange(e)} name='username' value={username} id="my-input" />
+                <Input placeholder='username' onChange={(e) => setUsername(e.target.value)} id="my-input" />
             </FormControl>
             <FormControl>
                 <InputLabel htmlFor="my-input">Email</InputLabel>
-                <Input onChange={(e) => onValueChange(e)} name='email' value={email} id="my-input"/>
+                <Input placeholder='email' onChange={(e) => setEmail(e.target.value)} id="my-input"/>
             </FormControl>
             <FormControl>
                 <InputLabel htmlFor="my-input">Phone</InputLabel>
-                <Input onChange={(e) => onValueChange(e)} name='phone' value={phone} id="my-input" />
+                <Input placeholder='phone' onChange={(e) => setPhone(e.target.value)} id="my-input" />
             </FormControl>
             <FormControl>
-                <Button variant="contained" color="primary" onClick={() => addUserDetails()}>Add User</Button>
+                <InputLabel htmlFor="my-input">Profile</InputLabel>
+                <Input  placeholder='profile' type='file' name='profile_file' onChange={(e) => setProfile(e.target.files)}  id="my-input" />
+            </FormControl>
+            <FormControl>
+                
+                <Button variant="contained" color="primary" onClick={postData} type='submit'><Link to="/all">Add User</Link></Button>
             </FormControl>
         </FormGroup>
     )

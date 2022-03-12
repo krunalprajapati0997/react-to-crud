@@ -1,31 +1,44 @@
-import { Box, Typography, makeStyles } from '@material-ui/core';
-// import Youtube from '../Assets/Images/youtube.png';
-// import InstaTele from '../Assets/Images/InstaTele.jpeg';
+import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
-const useStyles = makeStyles({
-    component: {
-        margin: 50,
-        '& > *': {
-            marginTop: 50
-        }
-    },
-    image: {
-        width: '50%',
-        height: '50%'
-    }
-})
 
-const CodeForInterview = () => {
-    const classes = useStyles();
-    return (
-        <Box className={classes.component}>
-            <Typography variant="h4">Code for Interview</Typography>
-            <Box style={{display: 'flex'}}>
-                {/* <img src={Youtube} className={classes.image} />
-                <img src={InstaTele} className={classes.image} /> */}
-            </Box>
-        </Box>
-    )
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function validateForm() {
+    return email.length > 0 && password.length > 0;
+  }
+  
+  function handleSubmit(event) {
+    event.preventDefault();
+  }
+
+  return (
+    <div className="Login">
+      <Form onSubmit={handleSubmit}>
+        <Form.Group size="lg" controlId="email">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            autoFocus
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group size="lg" controlId="password">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
+        <Button block size="lg" type="submit" disabled={!validateForm()}>
+          Login
+        </Button>
+      </Form>
+    </div>
+  );
 }
-
-export default CodeForInterview;

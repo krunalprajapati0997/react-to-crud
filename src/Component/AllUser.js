@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableHead, TableCell, TableRow, TableBody, Button, makeStyles } from '@material-ui/core'
-import { getUsers, deleteUser } from '../Service/api';
+import { getUsers } from '../Service/api';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
-import { dialogContentTextClasses } from '@mui/material';
+// import { dialogContentTextClasses } from '@mui/material';
 
 const useStyles = makeStyles({
     table: {
@@ -31,12 +31,10 @@ const AllUsers = () => {
 
     useEffect(() => {
         getAllUsers();
-        deleteUser()
-        
     }, []);
 
     useEffect(() => {
-        axios.get(`http://localhost:7002`)
+        axios.get('http://localhost:6009')
             .then(res => {
                 setUsers(res.data.data)
             })
@@ -44,14 +42,20 @@ const AllUsers = () => {
 
         
 
-        function deleteuser(_id) {
-            console.log(_id);
-            axios.delete(`http://localhost:7001/${_id}`, {}).then((result) => {
-                console.log("result.data", result);
-    
-            })
+        function deleteUser(id) {
+            if(id == undefined || id == null) {
+                alert("id not found");
+            } else {
+                console.log(id);
+                axios.delete(`http://localhost:6009/${id}`, {}).then((result) => {
+                    console.log("result.data", result);
+        
+                })
+            }
     
         }
+
+        
 
         
         
@@ -76,20 +80,24 @@ const AllUsers = () => {
                     <TableCell>Username</TableCell>
                     <TableCell>Email</TableCell>
                     <TableCell>Phone</TableCell>
-                    <TableCell></TableCell>
+                    <TableCell>Profile</TableCell>
+                   
                 </TableRow>
             </TableHead>
             <TableBody>
                 {users.map((user) => (
                     <TableRow className={classes.row} key={user.id}>
-                        {/* <TableCell>{user._id}</TableCell> change it to user.id to use JSON Server */}
+                        {/* <TableCell>{user._id}</TableCell>  */}
                         <TableCell>{user.name}</TableCell>
                         <TableCell>{user.username}</TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell>{user.phone}</TableCell>
+                        
+
+                        <TableCell><img src={user.profile_url} width="100" height="100" alt=""></img></TableCell>
                         <TableCell>
-                            <Button color="primary" variant="contained" style={{marginRight:10}} component={Link} to={`/edit/${user._id}`}>Edit</Button> {/* change it to user.id to use JSON Server */}
-                            <Button color="secondary" variant="contained" onClick={() => deleteUserData(user._id)}>Delete</Button> {/* change it to user.id to use JSON Server */}
+                            <Button color="primary" variant="contained" style={{marginRight:10}} component={Link} to={`/edit/${user._id}`}>Edit</Button> 
+                            <Button color="secondary" variant="contained" onClick={() => deleteUserData(user._id)}>Delete</Button>
                         </TableCell>
                     </TableRow>
                 ))}
